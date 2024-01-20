@@ -15,13 +15,13 @@ import java.util.Iterator;
 import java.util.Locale;
 
 
-public class Money implements Comparable, Serializable {
+public class Money implements Comparable<Money>, Serializable {
     private static final Currency USD = Currency.getInstance("USD");
     private static final Currency EUR = Currency.getInstance("EUR");
     private static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
-    private BigDecimal amount;
-    private Currency currency;
+    private final BigDecimal amount;
+    private final Currency currency;
 
     /**
      * The constructor does not complex computations and requires simple, inputs
@@ -100,14 +100,14 @@ public class Money implements Comparable, Serializable {
         return Money.valueOf(amount, EUR);
     }
 
-    public static Money sum(Collection monies) {
+    public static Money sum(Collection<Money> monies) {
         //TODO Return Default Currency
         if (monies.isEmpty())
             return Money.dollars(0.00);
-        Iterator iterator = monies.iterator();
-        Money sum = (Money) iterator.next();
+        Iterator<Money> iterator = monies.iterator();
+        Money sum = iterator.next();
         while (iterator.hasNext()) {
-            Money each = (Money) iterator.next();
+            Money each = iterator.next();
             sum = sum.plus(each);
         }
         return sum;
@@ -238,10 +238,7 @@ public class Money implements Comparable, Serializable {
         return times(new BigDecimal(i));
     }
 
-    public int compareTo(Object other) {
-        return compareTo((Money) other);
-    }
-
+    @Override
     public int compareTo(Money other) {
         if (!hasSameCurrencyAs(other))
             throw new IllegalArgumentException("Compare is not defined between different currencies");
@@ -306,7 +303,7 @@ public class Money implements Comparable, Serializable {
 
     private void assertHasSameCurrencyAs(Money aMoney) {
         if (!hasSameCurrencyAs(aMoney))
-            throw new IllegalArgumentException(aMoney.toString() + " is not same currency as " + this.toString());
+            throw new IllegalArgumentException(aMoney + " is not same currency as " + this);
     }
 
 }

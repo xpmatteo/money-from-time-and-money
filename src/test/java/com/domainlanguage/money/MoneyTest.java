@@ -139,12 +139,12 @@ public class MoneyTest extends TestCase {
         Money d2_51a = Money.dollars(2.51);
         assertEquals(d2_51a, d2_51);
     }
-    
+
     public void testEqualsNull() {
         Money d2_51a = Money.dollars(2.51);
         Object objectNull = null;
         assertFalse(d2_51a.equals(objectNull));
-        
+
         //This next test seems just like the previous, but it's not
         //The Java Compiler early binds message sends and
         //it will bind the next call to equals(Money) and
@@ -203,15 +203,15 @@ public class MoneyTest extends TestCase {
         assertEquals(Money.dollars(2.52), d2_51.incremented());
         assertEquals(Money.valueOf(51, JPY), y50.incremented());
     }
-    
+
     public void testFractionalPennies() {
-//        CurrencyPolicy(USD, 0.0025); 
+//        CurrencyPolicy(USD, 0.0025);
 //        Smallest unit.unit Any Money based on this CurrencyPolicy must be some multiple of the
 //        smallest unit. "Scale" is insufficient, because the limit is not always a number of demial places.
 //        Money someFee = Money.dollars(0.0025);
 //        Money wholeMoney = someFee.times(4);
 //        assertEquals(Money.dollars(0.01), wholeMoney);
-        
+
     }
 
 }

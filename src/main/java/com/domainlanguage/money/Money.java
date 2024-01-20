@@ -6,6 +6,8 @@
 
 package com.domainlanguage.money;
 
+import com.domainlanguage.base.Ratio;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -191,19 +193,19 @@ public class Money implements Comparable<Money>, Serializable {
         return dividedBy(new BigDecimal(divisor), roundingMode);
     }
 
-//    public Ratio dividedBy(Money divisor) {
-//        assertHasSameCurrencyAs(divisor);
-//        return Ratio.of(amount, divisor.amount);
-//    }
-//
-//    public Money applying(Ratio ratio, int roundingRule) {
-//        return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
-//    }
-//
-//    public Money applying(Ratio ratio, int scale, int roundingRule) {
-//        BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
-//        return Money.valueOf(newAmount, currency);
-//    }
+    public Ratio dividedBy(Money divisor) {
+        assertHasSameCurrencyAs(divisor);
+        return Ratio.of(amount, divisor.amount);
+    }
+
+    public Money applying(Ratio ratio, RoundingMode roundingRule) {
+        return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+    }
+
+    public Money applying(Ratio ratio, int scale, RoundingMode roundingRule) {
+        BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
+        return Money.valueOf(newAmount, currency);
+    }
 
     /**
      * TODO: Many apps require carrying extra precision in intermediate

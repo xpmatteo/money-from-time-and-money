@@ -8,6 +8,7 @@
 package com.domainlanguage.base;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Ratio represents the unitless division of two quantities of the same type.
@@ -42,7 +43,7 @@ public class Ratio {
         this.denominator = denominator;
     }
 
-    public BigDecimal decimalValue(int scale, int roundingRule) {
+    public BigDecimal decimalValue(int scale, RoundingMode roundingRule) {
         return numerator.divide(denominator, scale, roundingRule);
     }
 

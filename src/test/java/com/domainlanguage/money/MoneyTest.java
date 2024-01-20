@@ -102,19 +102,19 @@ public class MoneyTest {
 
     @Test
     public void testDivisionByMoney() {
-//        assertThat(new BigDecimal(2.50)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(1, RoundingMode.UNNECESSARY));
-//        assertThat(new BigDecimal(1.25)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(4.00)).decimalValue(2, RoundingMode.UNNECESSARY));
-//        assertThat(new BigDecimal(5)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(1.00)).decimalValue(0, RoundingMode.UNNECESSARY));
-//        try {
-//            Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(0, RoundingMode.UNNECESSARY);
-//            fail("dividedBy(Money) does not allow rounding.");
-//        } catch (ArithmeticException correctBehavior) {
-//        }
-//        try {
-//            Money.dollars(10.00).dividedBy(Money.dollars(3.00)).decimalValue(5, RoundingMode.UNNECESSARY);
-//            fail("dividedBy(Money) does not allow rounding.");
-//        } catch (ArithmeticException correctBehavior) {
-//        }
+        assertThat(new BigDecimal(2.50)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(1, RoundingMode.UNNECESSARY));
+        assertThat(new BigDecimal(1.25)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(4.00)).decimalValue(2, RoundingMode.UNNECESSARY));
+        assertThat(new BigDecimal(5)).isEqualTo(Money.dollars(5.00).dividedBy(Money.dollars(1.00)).decimalValue(0, RoundingMode.UNNECESSARY));
+        try {
+            Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(0, RoundingMode.UNNECESSARY);
+            fail("dividedBy(Money) does not allow rounding.");
+        } catch (ArithmeticException correctBehavior) {
+        }
+        try {
+            Money.dollars(10.00).dividedBy(Money.dollars(3.00)).decimalValue(5, RoundingMode.UNNECESSARY);
+            fail("dividedBy(Money) does not allow rounding.");
+        } catch (ArithmeticException correctBehavior) {
+        }
     }
 
     @Test

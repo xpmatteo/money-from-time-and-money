@@ -4,11 +4,12 @@
  * For more information, see http://timeandmoney.sourceforge.net.
  */
 
-package com.domainlanguage.base;
+package com.domainlanguage.money;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,31 +21,31 @@ public class RatioTest {
     public void testBigDecimalRatio() {
         Ratio r3over2 = Ratio.of(new BigDecimal(3), new BigDecimal(2));
         BigDecimal result = r3over2.decimalValue(1, RoundingMode.UNNECESSARY);
-        assertThat(result).isEqualTo(new BigDecimal("1.5"));;
+        assertThat(result).isEqualTo(new BigDecimal("1.5"));
 
         Ratio r10over3 = Ratio.of(new BigDecimal(10), new BigDecimal(3));
         result = r10over3.decimalValue(3, RoundingMode.DOWN);
-        assertThat(result).isEqualTo(new BigDecimal("3.333"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.333"));
 
         result = r10over3.decimalValue(3, RoundingMode.UP);
-        assertThat(result).isEqualTo(new BigDecimal("3.334"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.334"));
 
         Ratio rManyDigits = Ratio.of(new BigDecimal("9.001"), new BigDecimal(3));
         result = rManyDigits.decimalValue(6, RoundingMode.UP);
-        assertThat(result).isEqualTo(new BigDecimal("3.000334"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.000334"));
 
         result = rManyDigits.decimalValue(7, RoundingMode.UP);
-        assertThat(result).isEqualTo(new BigDecimal("3.0003334"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.0003334"));
 
         result = rManyDigits.decimalValue(7, RoundingMode.HALF_UP);
-        assertThat(result).isEqualTo(new BigDecimal("3.0003333"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.0003333"));
     }
 
     @Test
     public void testLongRatio() {
         Ratio rManyDigits = Ratio.of(9001l, 3000l);
         BigDecimal result = rManyDigits.decimalValue(6, RoundingMode.UP);
-        assertThat(result).isEqualTo(new BigDecimal("3.000334"));;
+        assertThat(result).isEqualTo(new BigDecimal("3.000334"));
     }
 
     @Test
@@ -66,6 +67,6 @@ public class RatioTest {
         Ratio r1 = Ratio.of(9001, 3000);
         Ratio r2 = Ratio.of(3, 2);
         Ratio expectedProduct = Ratio.of(27003, 6000);
-        assertThat(r1.times(r2)).isEqualTo(expectedProduct);;
+        assertThat(r1.times(r2)).isEqualTo(expectedProduct);
     }
 }

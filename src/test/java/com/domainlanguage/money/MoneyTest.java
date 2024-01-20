@@ -152,7 +152,7 @@ public class MoneyTest {
     public void testEqualsNull() {
         Money d2_51a = Money.dollars(2.51);
         Object objectNull = null;
-        assertThat(d2_51a.equals(objectNull)).isFalse();
+        assertThat(d2_51a).isNotEqualTo(objectNull);
 
         //This next test seems just like the previous, but it's not
         //The Java Compiler early binds message sends and
@@ -161,7 +161,7 @@ public class MoneyTest {
         //I renamed the original equals(Money) to
         //equalsMoney(Money) to prevent wrong binding.
         Money moneyNull = null;
-        assertThat(d2_51a.equals(moneyNull)).isFalse();
+        assertThat(d2_51a).isNotEqualTo(moneyNull);
     }
 
     @Test
@@ -177,7 +177,6 @@ public class MoneyTest {
     }
 
     @Test
-
     public void testPositiveNegative() {
         assertThat(d15.isPositive()).isTrue();
         assertThat(Money.dollars(-10).isNegative()).isTrue();
@@ -208,17 +207,20 @@ public class MoneyTest {
         assertThat(Money.dollars(12.49)).isEqualTo(d15.minus(d2_51));
     }
 
-//    public void testApplyRatio() {
-//        Ratio oneThird = Ratio.of(1, 3);
-//        Money result = Money.dollars(100).applying(oneThird, 1, RoundingMode.UP);
-//        assertThat(Money.dollars(33.40)).isEqualTo(result);
-//    }
+    @Test
+    public void testApplyRatio() {
+        Ratio oneThird = Ratio.of(1, 3);
+        Money result = Money.dollars(100).applying(oneThird, 1, RoundingMode.UP);
+        assertThat(Money.dollars(33.40)).isEqualTo(result);
+    }
 
+    @Test
     public void testIncremented() {
         assertThat(Money.dollars(2.52)).isEqualTo(d2_51.incremented());
         assertThat(Money.valueOf(51, JPY)).isEqualTo(y50.incremented());
     }
 
+    @Test
     public void testFractionalPennies() {
 //        CurrencyPolicy(USD, 0.0025);
 //        Smallest unit.unit Any Money based on this CurrencyPolicy must be some multiple of the

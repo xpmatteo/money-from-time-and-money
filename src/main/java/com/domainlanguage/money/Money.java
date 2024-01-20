@@ -6,8 +6,6 @@
 
 package com.domainlanguage.money;
 
-import com.domainlanguage.base.Ratio;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -282,6 +280,10 @@ public class Money implements Comparable<Money>, Serializable {
         return currency.getSymbol(locale) + " " + amount;
     }
 
+// MV: commented out -- I thought it was best not to import the TimeRate and MoneyTimeRate classes
+// as they seem less cohesive wrt to what Money does.  The dependency should be IMHO in the other
+// direction, so that those who want to use Money without MoneyTimeRate can do so
+//
 //    public MoneyTimeRate per(Duration duration) {
 //        return new MoneyTimeRate(this, duration);
 //    }

@@ -5,7 +5,7 @@
  *
  */
 
-package com.domainlanguage.base;
+package com.domainlanguage.money;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

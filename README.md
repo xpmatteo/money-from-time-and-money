@@ -1,13 +1,13 @@
 
-# Time from TimeAndMoney by Domain Language
+# Money from TimeAndMoney by Domain Language
 
 This repo contains an extraction of the `Money` type from [the TimeAndMoney library](https://timeandmoney.sourceforge.net/), 
 published by [Eric Evans](https://www.linkedin.com/in/ericevansddd/)' company so long ago.
 
-At the time (about 2004), standard Java did not provide good implementation of time and calendar 
-related concepts, so it made sense for others to provide them.  Since tne introduction
+At the time (about 2004), standard Java did not provide a good implementation of time and date, 
+so it made sense for others to provide them.  Since tne introduction
 of LocalDate and related classes in Java 1.8 (2014), there is no need to use external libraries
-for dates and time; there is, however, still [a good case for implementing a Money abstraction](https://hilton.org.uk/blog/money-data-type).
+for dates and time anymore; there is, however, still [a good case for implementing a Money abstraction](https://hilton.org.uk/blog/money-data-type).
 
 Over the course of the years, I've seen various implementations of Money classes in the projects
 I've been involved in, and they all more-or-less worked by wrapping Java's `BigDecimal`, which is 

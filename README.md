@@ -16,7 +16,9 @@ make it available in modern Java, unencumbered by the time and date parts of the
 
 What I did:
 * Extracted the Money.java and MoneyTest.java files from the svn archive published on SourceForge
-* 
+* Replaced uses of `com.domainlanguage.base.Rounding` with the corresponding values in `java.math.RoundingMode`
+* Eliminated the default constructor and other methods that were "put in here begrudgingly" for the benefit of ORMs
+* Updated tests to Junit 5
 
 The code in this repo is Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com) and
 published under the "MIT" license. See file LICENSE. 

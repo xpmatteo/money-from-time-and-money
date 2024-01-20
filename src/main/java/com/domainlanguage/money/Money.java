@@ -8,19 +8,17 @@ package com.domainlanguage.money;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.Iterator;
 import java.util.Locale;
 
-import com.domainlanguage.base.Ratio;
-import com.domainlanguage.base.Rounding;
-import com.domainlanguage.time.Duration;
 
 public class Money implements Comparable, Serializable {
     private static final Currency USD = Currency.getInstance("USD");
     private static final Currency EUR = Currency.getInstance("EUR");
-    private static final int DEFAULT_ROUNDING_MODE = Rounding.HALF_EVEN;
+    private static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;
 
     private BigDecimal amount;
     private Currency currency;
@@ -42,13 +40,13 @@ public class Money implements Comparable, Serializable {
      * round off the amount.
      */
     public static Money valueOf(BigDecimal amount, Currency currency) {
-        return Money.valueOf(amount, currency, Rounding.UNNECESSARY);
+        return Money.valueOf(amount, currency, RoundingMode.UNNECESSARY);
     }
 
     /**
      * For convenience, an amount can be rounded to create a Money.
      */
-    public static Money valueOf(BigDecimal rawAmount, Currency currency, int roundingMode) {
+    public static Money valueOf(BigDecimal rawAmount, Currency currency, RoundingMode roundingMode) {
         BigDecimal amount = rawAmount.setScale(currency.getDefaultFractionDigits(), roundingMode);
         return new Money(amount, currency);
     }
@@ -65,7 +63,7 @@ public class Money implements Comparable, Serializable {
      * Because of the indefinite precision of double, this method must round off
      * the value. This method gives the client control of the rounding mode.
      */
-    public static Money valueOf(double dblAmount, Currency currency, int roundingMode) {
+    public static Money valueOf(double dblAmount, Currency currency, RoundingMode roundingMode) {
         BigDecimal rawAmount = new BigDecimal(dblAmount);
         return Money.valueOf(rawAmount, currency, roundingMode);
     }
@@ -180,7 +178,7 @@ public class Money implements Comparable, Serializable {
         return this.plus(other.negated());
     }
 
-    public Money dividedBy(BigDecimal divisor, int roundingMode) {
+    public Money dividedBy(BigDecimal divisor, RoundingMode roundingMode) {
         BigDecimal newAmount = amount.divide(divisor, roundingMode);
         return Money.valueOf(newAmount, currency);
     }
@@ -189,23 +187,23 @@ public class Money implements Comparable, Serializable {
         return dividedBy(divisor, DEFAULT_ROUNDING_MODE);
     }
 
-    public Money dividedBy(double divisor, int roundingMode) {
+    public Money dividedBy(double divisor, RoundingMode roundingMode) {
         return dividedBy(new BigDecimal(divisor), roundingMode);
     }
 
-    public Ratio dividedBy(Money divisor) {
-        assertHasSameCurrencyAs(divisor);
-        return Ratio.of(amount, divisor.amount);
-    }
-
-    public Money applying(Ratio ratio, int roundingRule) {
-        return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
-    }
-
-    public Money applying(Ratio ratio, int scale, int roundingRule) {
-        BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
-        return Money.valueOf(newAmount, currency);
-    }
+//    public Ratio dividedBy(Money divisor) {
+//        assertHasSameCurrencyAs(divisor);
+//        return Ratio.of(amount, divisor.amount);
+//    }
+//
+//    public Money applying(Ratio ratio, int roundingRule) {
+//        return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+//    }
+//
+//    public Money applying(Ratio ratio, int scale, int roundingRule) {
+//        BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
+//        return Money.valueOf(newAmount, currency);
+//    }
 
     /**
      * TODO: Many apps require carrying extra precision in intermediate
@@ -224,11 +222,11 @@ public class Money implements Comparable, Serializable {
      * TODO: BigDecimal.multiply() scale is sum of scales of two multiplied
      * numbers. So what is scale of times?
      */
-    public Money times(BigDecimal factor, int roundingMode) {
+    public Money times(BigDecimal factor, RoundingMode roundingMode) {
         return Money.valueOf(amount.multiply(factor), currency, roundingMode);
     }
 
-    public Money times(double amount, int roundingMode) {
+    public Money times(double amount, RoundingMode roundingMode) {
         return times(new BigDecimal(amount), roundingMode);
     }
 
@@ -285,9 +283,9 @@ public class Money implements Comparable, Serializable {
         return currency.getSymbol(locale) + " " + amount;
     }
 
-    public MoneyTimeRate per(Duration duration) {
-        return new MoneyTimeRate(this, duration);
-    }
+//    public MoneyTimeRate per(Duration duration) {
+//        return new MoneyTimeRate(this, duration);
+//    }
 
 //  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't
 //  do it.
@@ -310,35 +308,5 @@ public class Money implements Comparable, Serializable {
         if (!hasSameCurrencyAs(aMoney))
             throw new IllegalArgumentException(aMoney.toString() + " is not same currency as " + this.toString());
     }
-
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    Money() {
-    }
-
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private BigDecimal getForPersistentMapping_Amount() {
-        return amount;
-    }
-
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private void setForPersistentMapping_Amount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private Currency getForPersistentMapping_Currency() {
-        return currency;
-    }
-
-    //Only for use by persistence mapping frameworks
-    //<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-    private void setForPersistentMapping_Currency(Currency currency) {
-        this.currency = currency;
-    }
-
 
 }
